@@ -1,0 +1,14 @@
+{
+  "name": "front-end",
+  "version": "1.0.0",
+  "description": "Charlie's front-end sources",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "practices",
+    "utils",
+    "demos"
+  ],
+  "author": "Charlie.Chen",
+  "license": "ISC"
+}
