@@ -3478,6 +3478,7 @@
    * Flush both queues and run the watchers.
    */
   function flushSchedulerQueue() {
+		debugger
     currentFlushTimestamp = getNow();
     flushing = true;
     var watcher, id;
@@ -4529,7 +4530,6 @@
      * Evaluate the getter, and re-collect dependencies.
      */
     Watcher.prototype.get = function () {
-      debugger;
       pushTarget(this);
       var value;
       var vm = this.vm;
