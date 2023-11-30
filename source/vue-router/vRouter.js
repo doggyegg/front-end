@@ -3341,7 +3341,7 @@ var VueRouter = (function (exports, vue) {
     const afterGuards = useCallbacks();
     const currentRoute = vue.shallowRef(START_LOCATION_NORMALIZED);
     let pendingLocation = START_LOCATION_NORMALIZED;
-    // leave the scrollRestoration if no scrollBehavior is provided
+    // leave the scrollRestoration if no scrollBehavior is <provided></provided>
     if (isBrowser && options.scrollBehavior && "scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }

@@ -10,6 +10,8 @@
 <body>
 	<div id="app">
 		{{name}}
+		<button @click="handleShow">show</button>
+		<child ref="testRef" v-if="isShow"></child>
 	</div>
 </body>
 <script src="./vue2.js"></script>
@@ -19,7 +21,32 @@
 		el: '#app',
 		data() {
 			return {
-				name: 'zs'
+				name: 'zs',
+				isShow: false
+			}
+		},
+		components: {
+			child: {
+				template: '<div>{{name}}</div>',
+				data() {
+					return {
+						name: 'childComp'
+					}
+				},
+				methods: {
+					childFunc() {
+						debugger
+					}
+				}
+			}
+		},
+		methods: {
+			async handleShow() {
+				this.isShow = true;
+				this.$nextTick(() => {
+					this.$refs.testRef.childFunc();
+				});
+
 			}
 		},
 	})

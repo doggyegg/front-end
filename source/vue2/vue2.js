@@ -3478,7 +3478,6 @@
    * Flush both queues and run the watchers.
    */
   function flushSchedulerQueue() {
-		debugger
     currentFlushTimestamp = getNow();
     flushing = true;
     var watcher, id;
