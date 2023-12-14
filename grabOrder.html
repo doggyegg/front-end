@@ -1,0 +1,553 @@
+<html>
+
+<head>
+	<style type="text/css">
+		#divBox {
+			right: 50%;
+			width: 500px;
+			height: 100px;
+			display: none;
+			border: #E4F5FD 1px solid;
+			z-index: 2;
+			position: absolute;
+			background: #ebcccc;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="divBox">
+		<font size="3">
+			备注：<br />
+			1、核销时：待结清金额 = 待回收债权总额；<br />
+			2、非核销时：如果还款日 >= 今天日期：待结清金额 = 逾期总金额 + 剩余本金 +本月利息；<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果还款日
+			< 今天日期：待结清金额=逾期总金额 + 剩余本金； <br />
+			3、逾期金额在核销时废弃不看；<br />
+		</font>
+	</div>
+</body>
+
+</html>
+
+<div id="entrustListDQDPage">
+	<form id="pagerForm" method="post" action="/collection/pages/CsCaseMain/entrustlist.do">
+		<input type="hidden" name="pageNum" value="1" />
+		<input type="hidden" name="numPerPage" value="50" />
+		<input type="hidden" name="orderField" value="" />
+		<input type="hidden" name=orderDirection value="" />
+		<input type="hidden" name="customerid" value="" />
+		<input type="hidden" name="customername" value="" />
+		<input type="hidden" name="changesectorreason" value="" />
+		<input type="hidden" name="changeteamreason" value="" />
+		<input type="hidden" name="currcollector" value="" />
+		<input type="hidden" name="currcollectordateBegin" value="" />
+		<input type="hidden" name="currcollectordateEnd" value="" />
+		<input type="hidden" name="currcollectorleader" value="" />
+		<input type="hidden" name="currcollectorteam" value="" />
+		<input type="hidden" name="currcollectorteamaccstatus" value="" />
+		<input type="hidden" name="currcollectorteamdateBegin" value="" />
+		<input type="hidden" name="currcollectorteamdateEnd" value="" />
+		<input type="hidden" name="currdcamanager" value="" />
+		<input type="hidden" name="currsector" value="OUTSRC" />
+		<input type="hidden" name="currsectoraccstatus" value="" />
+		<input type="hidden" name="currsectordateBegin" value="" />
+		<input type="hidden" name="currsectordateEnd" value="" />
+		<input type="hidden" name="currstates" value="" />
+		<input type="hidden" name="currstatusdateBegin" value="" />
+		<input type="hidden" name="currstatusdateEnd" value="" />
+		<input type="hidden" name="curruser" value="" />
+		<input type="hidden" name="curruserdateBegin" value="" />
+		<input type="hidden" name="curruserdateEnd" value="" />
+		<input type="hidden" name="intodateBegin" value="" />
+		<input type="hidden" name="intodateEnd" value="" />
+		<input type="hidden" name="leaderfollowflag" value="" />
+		<input type="hidden" name="leaderfollowreason" value="" />
+		<input type="hidden" name="newflag" value="" />
+		<input type="hidden" name="notchangesectorflag" value="" />
+		<input type="hidden" name="prevcollector" value="" />
+		<input type="hidden" name="prevcollectorteam" value="" />
+		<input type="hidden" name="prevsector" value="" />
+		<input type="hidden" name="prevstatus" value="" />
+		<input type="hidden" name="prevuser" value="" />
+		<input type="hidden" name="sendtodcatype" value="" />
+		<input type="hidden" name="todaycontactflag" value="" />
+		<input type="hidden" name="transferdateBegin" value="" />
+		<input type="hidden" name="transferdateEnd" value="" />
+		<input type="hidden" name="transferreason1" value="" />
+		<input type="hidden" name="transferreason2" value="" />
+		<input type="hidden" name="transferuser" value="" />
+		<input type="hidden" name="waitforflow" value="" />
+		<input type="hidden" name="queueid" value="" />
+		<input type="hidden" name="oanamelast" value="" />
+		<input type="hidden" name="intHands" value="" />
+		<input type="hidden" name="checkDateBegin" value="" />
+		<input type="hidden" name="checkDateEnd" value="" />
+		<input type="hidden" name="flowflag" value="DQD" />
+		<input type="hidden" name="tdcstatus" value="" />
+		<input type="hidden" name="ptp" value="" />
+		<input type="hidden" name="contractNo" value="" />
+		<input type="hidden" name="applicationNumber" value="" />
+		<input type="hidden" name="dcastatus" value="2" />
+		<input type="hidden" name="billingDay" value="" />
+		<input type="hidden" name="externalContractNo" value="" />
+		<input type="hidden" name="sumAmountBegin" value="" />
+		<input type="hidden" name="sumAmountEnd" value="" />
+		<input type="hidden" name="totalOddaysBegin" value="" />
+		<input type="hidden" name="totalOddaysEnd" value="" />
+
+		<!-- 经销商 -->
+		<input type="hidden" name="dealer" value="" />
+		<!-- 省级编码 -->
+		<input type="hidden" name="province" value="" />
+		<!-- 市级编码 -->
+		<input type="hidden" name="city" value="" />
+		<!-- O.D Amt： -->
+		<input type="hidden" name="dueAmtBegin" value="" />
+		<input type="hidden" name="dueAmtEnd" value="" />
+		<!-- 委外公司id -->
+		<input type="hidden" name="compId" value="" />
+		<!-- 放单日期： -->
+		<input type="hidden" name="dcaplanallocdateBegin" value="" />
+		<input type="hidden" name="dcaplanallocdateEnd" value="" />
+		<!-- 计划结单日期： -->
+		<input type="hidden" name="dcaplanbldateBegin" value="" />
+		<input type="hidden" name="dcaplanbldateEnd" value="" />
+		<!-- LatestActionDate： -->
+		<input type="hidden" name="actionDateBegin" value="" />
+		<input type="hidden" name="actionDateEnd" value="" />
+		<input type="hidden" name="pageFlag" value="1" />
+		<input type="hidden" name="businessType" value="" />
+		<input type="hidden" name="riskControlManager" value="" />
+		<input type="hidden" name="haveHomeRecord" value="" />
+		<input type="hidden" name="currsubsector" value="" />
+
+		<input type="hidden" name="dealerForShort" value="" />
+		<input type="hidden" name="delinquencyTerm" value="" />
+		<input type="hidden" name="dcaType" value="" />
+		<input type="hidden" name="dcatrantimes" value="" />
+		<input type="hidden" name="dcarealallocdateBegin" value="" />
+		<input type="hidden" name="dcarealallocdateEnd" value="" />
+		<input type="hidden" name="accountType" value="" />
+		<input type="hidden" name="receiveStatus" value="" />
+		<input type="hidden" name="writeoffflag" value="" />
+
+		<input type="hidden" name="outsrcLawsuitFlag" value="" />
+	</form>
+
+	<form name="entrustDQDlist" onsubmit="return navTabSearch_before(this);"
+		action="/collection/pages/CsCaseMain/entrustlist.do" method="post">
+		<div class="pageHeader">
+			<div class="searchBar">
+				<input type="hidden" name="flowflag" value="DQD" />
+				<input type="hidden" name="dcastatus" value="2" />
+				<input type="hidden" name="pageFlag" value="0" />
+				<table width=99%>
+					<tr>
+						<td align="right"> 合同号：<!--contractNo：--></td>
+						<td><input id="externalContractNoel" name="externalContractNo" value="" /></td>
+						<td align="right">借款人：<!--Borrower：--></td>
+						<td><input id="customername" name="customername" value="" /></td>
+						<td align="right">专营店简称：<!--DealerName：--></td>
+						<td><input id="dealerForShort" name="dealerForShort" value="" /></td>
+						<td align="right">省份：<!--Province：--></td>
+						<td>
+							<select id="province_EN" name="province" style="width:130px" onchange="doQueryCity_EN()">
+								<option value="" selected="selected">请选择...</option>
+
+								<option value="004">安徽</option>
+
+								<option value="011">澳门</option>
+
+								<option value="001">北京</option>
+
+								<option value="007">重庆</option>
+
+								<option value="006">福建</option>
+
+								<option value="030">甘肃</option>
+
+								<option value="018">广东</option>
+
+								<option value="021">广西</option>
+
+								<option value="024">贵州</option>
+
+								<option value="020">海南</option>
+
+								<option value="023">河北</option>
+
+								<option value="012">河南</option>
+
+								<option value="031">黑龙江</option>
+
+								<option value="014">湖北</option>
+
+								<option value="016">湖南</option>
+
+								<option value="029">吉林</option>
+
+								<option value="033">江苏</option>
+
+								<option value="008">江西</option>
+
+								<option value="027">辽宁</option>
+
+								<option value="013">内蒙古</option>
+
+								<option value="017">宁夏</option>
+
+								<option value="032">青海</option>
+
+								<option value="010">山东</option>
+
+								<option value="025">山西</option>
+
+								<option value="028">陕西</option>
+
+								<option value="005">上海</option>
+
+								<option value="022">四川</option>
+
+								<option value="034">台湾</option>
+
+								<option value="003">天津</option>
+
+								<option value="019">西藏</option>
+
+								<option value="009">香港</option>
+
+								<option value="015">新疆</option>
+
+								<option value="026">云南</option>
+
+								<option value="002">浙江</option>
+
+							</select>
+						</td>
+						<td align="right">城市：<!--City：--></td>
+						<td><select id="city_EN" name="city" style="width:130px"></select></td>
+
+						<script type="text/javascript">
+							var domain = "/collection";
+							var province_EN = $("#province_EN");
+							var city_EN = $("#city_EN");
+
+							function doQueryCity_EN() {
+								doQueryCity(domain, province_EN, city_EN);
+							}
+
+							//初始化查询条件的省市值
+							initQuery(domain, province_EN, city_EN, '', '');
+						</script>
+						<td align="right">合同类型：</td>
+						<td>
+							<select id="accountType" name="accountType" style="width:80px">
+								<option value="">全部</option>
+								<option value="1">
+									乘用车
+								</option>
+								<option value="2">
+									商用车
+								</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+
+
+						<td align="right">委外类型：</td>
+						<td>
+							<select id="dcaType" name="dcaType" style="width:150px">
+								<option value="">请选择...</option>
+
+								<option value="1">
+									委外电催
+								</option>
+
+								<option value="2">
+									委外上门
+								</option>
+
+								<option value="3">
+									委外拖车
+								</option>
+
+								<option value="4">
+									诉讼停催
+								</option>
+
+								<option value="5">
+									投诉停催
+								</option>
+
+							</select>
+						</td>
+
+						<td align="right">是否核销：</td>
+						<td>
+							<select id="writeoffflag" name="writeoffflag">
+								<option value=""> 请选择</option>
+								<option value="0">
+									否
+								</option>
+								<option value="1">
+									是
+								</option>
+							</select>
+						</td>
+
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="pageContent">
+			<div class="panelBar">
+				<ul class="toolBar">
+					<li><a class="query-1" onclick="entrustDQDlist_query();"><span>自动抢单中...</span></a></li>
+					<li><a class="exit-excel"
+							onclick="exportExcelConfirm(this, 'exportExcel', '确定要导出这些记录吗？')"><span>导出excel</span></a></li>
+
+
+					<li><a id="grabCase" class="batch-1" href="javascript:void(0);" onclick="grabOrder('四川保全界-委外电催')"
+							rel="soitemsEntrustList"><span>确认抢单</span></a></li>
+					</li>
+
+					<li id="box_Btn"><a class="hand-meassage" href="javascript:void(0);">
+							<span>提示</span></a>
+					</li>
+				</ul>
+			</div>
+			<table class="list" id="tableen" layoutH=200 width="100%">
+				<thead>
+					<tr>
+						<th style="width:10px;"><input type="checkbox" group="soitemsEntrustList" postType="string"
+								class="checkboxCtrl"></th>
+						<th>序号</th>
+
+						<th orderField="EXTERNAL_CONTRACT_NO">合同号
+						</th>
+
+						<th orderField="CUSTOMERNAME">借款人
+						</th>
+						<th orderField="PROVINCE_CODE">省份
+						</th>
+						<th orderField="CITY_CODE">城市
+						</th>
+						<th orderField="DEALER_FOR_SHORT">专营店简称
+						</th>
+						<th orderField="OD_RENTAL_AMT">逾期本息
+						</th>
+						<th orderField="SUM_AMT">待结清金额
+						</th>
+						<th orderField="DCA_TYPE">委外类型
+						</th>
+						<th orderField="ACCOUNT_TYPE">合同类型
+						</th>
+
+						<th width="150px" orderField="RELATED_CONTRACT_NUM">关联合同数</th>
+					</tr>
+				</thead>
+				<tbody id="TrListEntrustlist">
+
+				</tbody>
+			</table>
+		</div>
+		<div class="panelBar">
+			<div class="pages">
+				<span>显示</span>
+				<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="50" selected="selected">50</option>
+					<option value="100">100</option>
+					<option value="200">200</option>
+					<option value="300">300</option>
+				</select>
+				<span>条，共0条</span>
+			</div>
+			<div class="pagination" targetType="navTab" totalCount="0" numPerPage="50" pageNumShown="10" currentPage="1">
+			</div>
+		</div>
+
+	</form>
+</div>
+<script type="text/javascript">
+
+	(function (note) {
+		var obox_Btn = document.getElementById("box_Btn");
+		var odivBox = document.getElementById("divBox");
+		obox_Btn.onmouseover = function () {
+			//debugger;
+			var pos = GetObjPos(obox_Btn);
+			odivBox.style.left = pos.x + 400 + 'px';
+			odivBox.style.top = pos.y + 400 + 'px';
+			odivBox.style.cssText = "display: block;"
+		}
+		// 不能写onmousemove，onmousemove是指鼠标移动时就发生事件，但是onmouseout是指鼠标移出发生事件
+		// 如果这里写onmousemove，那就是指鼠标只要经过了box_Btn或者在box_Btn上面发生移动，就不能出现divBox
+		obox_Btn.onmouseout = function () {
+			odivBox.style.cssText = "display: none;"
+		}
+	}(window));
+
+	// Todo: 禁用时间判断
+	// (function (note) {
+	// 	//上午8点到晚上10点才能抢单
+	// 	var now = new Date();
+	// 	var nowHours = now.getHours();
+	// 	//alert(nowHours);
+	// 	var grabCase = document.getElementById("grabCase");
+	// 	//加入href =”javascript:return false;” 可以实现不可点击功能
+	// 	//加入style=”opacity: 0.2”可以实现变灰的效果
+	// 	if (grabCase != null) {
+	// 		if (nowHours < 8 || nowHours > 22) {
+	// 			grabCase.removeAttribute('href');
+	// 			grabCase.removeAttribute('target');
+	// 			grabCase.style = "opacity:0.2;"
+	// 		}
+	// 	}
+
+	// }(window));
+
+
+	//  自动抢单
+	(function () {
+
+		if (window._UUTIMER) clearInterval(window._UUTIMER);
+
+		window._UUTIMER = setInterval(() => {
+			entrustDQDlist_query();
+		}, 1000)
+	})()
+
+
+
+	function CPos(x, y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	function GetObjPos(ATarget) {
+		var target = ATarget;
+		var pos = new CPos(target.offsetLeft, target.offsetTop);
+		var target = target.offsetParent;
+		while (target) {
+			pos.x += target.offsetLeft;
+			pos.y += target.offsetTop;
+
+			target = target.offsetParent
+		}
+		return pos;
+	}
+
+	var curForm;
+	function navTabSearch_before(elem) {
+		if (curForm) {
+			return navTabSearch(curForm)
+		} else {
+			return navTabSearch(elem)
+		}
+	}
+
+	function entrustDQDlist_query() {
+		//判断批量合同号的格式
+		var contractNoList = $("#contractNoListEntru").val() || '';//批量合同号
+		if (contractNoList != "") {
+			var flag = contractList(contractNoList);
+			if (!flag) {
+				return;
+			}
+		}
+
+		var dcatrantimes = $('#dcatrantimesel').val();
+		if (dcatrantimes != "" && !POSITIVE_INT_REG.test(dcatrantimes) && dcatrantimes != undefined) {
+			alertMsg.info('委外手数必须为数字！');
+			return;
+		} else {
+			var selectTabid = $('.navTab-tab > li.selected').attr('tabid')
+			$("form[name='entrustDQDlist']").each(function (index) {
+				if (selectTabid == 'main' && index == 0) {
+					curForm = $(this)
+					return false
+				} else {
+					curForm = $(this)
+				}
+			})
+			curForm.submit()
+		}
+	}
+
+	//抢单
+	function grabOrder(fullName) {
+		// debugger;  Todo:屏蔽时间逻辑
+		// var now = new Date();
+		// var nowHours = now.getHours();
+		// if (nowHours < 8 || nowHours > 22) {
+		// 	return
+		// }
+		var name = fullName;
+		var entrElm = $("input:checkbox[name='soitemsEntrustList']:checked")
+		if (entrElm.length != 1) {
+			alertMsg.warn("请选择单个抢单数据！")
+			return
+		}
+
+		var data = $(entrElm[0]).val() || '';
+		var strs = data.split("&");
+		var syskey = strs[0];
+		var prevCompName = strs[1];//历史委外公司
+		if (prevCompName.indexOf(name) != -1) {
+			alertMsg.confirm("该案件近半年内已被你公司跟进，是否继续抢单？", {
+				okCall: function () {
+					$.ajax({
+						type: "post",
+						url: '/collection/pages/CsCaseMainGrab/grabCaseConfirm.do',
+						data: {
+							syskey: syskey
+						},
+						success: function (data) {
+							var obj = eval('(' + data + ')');
+							alertMsg.info(obj.message);
+							if (obj.statusCode == 200) {
+								//刷新主界面
+								entrustDQDlist_query()
+							}
+						},
+						error: function (XMLHttpRequest, textStatus, errorThrown) {
+							alert("连接超时，请手动刷新确认，仍未解决请截图与管理员联系" + "XMLHttpRequest.status = " + XMLHttpRequest.status + "; XMLHttpRequest.readyState =  "
+								+ XMLHttpRequest.readyState + ";  textStatus = " + textStatus);
+							console.log(errorThrown);
+
+						}
+					})
+				}
+			})
+		} else {
+			$.ajax({
+				type: "post",
+				url: '/collection/pages/CsCaseMainGrab/grabCaseConfirm.do',
+				data: {
+					syskey: syskey
+				},
+				success: function (data) {
+					var obj = eval('(' + data + ')');
+					alertMsg.info(obj.message);
+					if (obj.statusCode == 200) {
+						//刷新主界面
+						entrustDQDlist_query()
+					}
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+					alert("连接超时，请手动刷新确认，仍未解决请截图与管理员联系" + "XMLHttpRequest.status = " + XMLHttpRequest.status + "; XMLHttpRequest.readyState =  "
+						+ XMLHttpRequest.readyState + ";  textStatus = " + textStatus);
+					console.log(errorThrown);
+
+				}
+			})
+		};
+
+	}
+
+</script>

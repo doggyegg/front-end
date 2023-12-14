@@ -1,8 +1,9 @@
+import Home from "./views/home";
+
 function App() {
   return (
     <div className="parent">
-      parent
-      <div className="child">child</div>
+      <Home></Home>
     </div>
   );
 }
