@@ -17,7 +17,7 @@
 
 <body>
 
-	<div id="divBox">
+	<div id="divBox" value="testhah">
 		<font size="3">
 			备注：<br />
 			1、核销时：待结清金额 = 待回收债权总额；<br />
@@ -305,7 +305,7 @@
 		<div class="pageContent">
 			<div class="panelBar">
 				<ul class="toolBar">
-					<li><a class="query-1" onclick="entrustDQDlist_query();"><span>自动抢单中...</span></a></li>
+					<li><a class="query-1" onclick="autoSearch();"><span>自动抢单</span></a></li>
 					<li><a class="exit-excel"
 							onclick="exportExcelConfirm(this, 'exportExcel', '确定要导出这些记录吗？')"><span>导出excel</span></a></li>
 
@@ -373,6 +373,9 @@
 
 	</form>
 </div>
+
+<script src="https://cdn.bootcss.com/jquery.form/4.2.2/jquery.form.js"></script>
+
 <script type="text/javascript">
 
 	(function (note) {
@@ -410,19 +413,6 @@
 	// 	}
 
 	// }(window));
-
-
-	//  自动抢单
-	(function () {
-
-		if (window._UUTIMER) clearInterval(window._UUTIMER);
-
-		window._UUTIMER = setInterval(() => {
-			entrustDQDlist_query();
-		}, 1000)
-	})()
-
-
 
 	function CPos(x, y) {
 		this.x = x;
@@ -479,14 +469,13 @@
 		}
 	}
 
-	//抢单
+	// 抢单
 	function grabOrder(fullName) {
-		// debugger;  Todo:屏蔽时间逻辑
-		// var now = new Date();
-		// var nowHours = now.getHours();
-		// if (nowHours < 8 || nowHours > 22) {
-		// 	return
-		// }
+		var now = new Date();
+		var nowHours = now.getHours();
+		if (nowHours < 8 || nowHours > 22) {
+			return
+		}
 		var name = fullName;
 		var entrElm = $("input:checkbox[name='soitemsEntrustList']:checked")
 		if (entrElm.length != 1) {
@@ -549,5 +538,83 @@
 		};
 
 	}
+
+
+	// 自动查询
+	function autoSearch() {
+		//判断批量合同号的格式
+		var contractNoList = $("#contractNoListEntru").val() || ''; // 批量合同号
+		if (contractNoList != "") {
+			var flag = contractList(contractNoList);
+			if (!flag) {
+				return;
+			}
+		}
+
+		var dcatrantimes = $('#dcatrantimesel').val();
+		if (dcatrantimes != "" && !POSITIVE_INT_REG.test(dcatrantimes) && dcatrantimes != undefined) {
+			alertMsg.info('委外手数必须为数字！');
+			return;
+		} else {
+			var selectTabid = $('.navTab-tab > li.selected').attr('tabid')
+			$("form[name='entrustDQDlist']").each(function (index) {
+				if (selectTabid == 'main' && index == 0) {
+					curForm = $(this)
+					return false
+				} else {
+					curForm = $(this)
+				}
+			})
+			curForm.ajaxSubmit(function (data) {
+				if (data) {
+					autoGrabOrder();
+				}
+			})
+		}
+	}
+
+
+
+	// 自动抢单
+	function autoGrabOrder() {
+		setTimeout(() => {
+			const dataLists = $("input:checkbox[name='soitemsEntrustList']");
+
+			if (dataLists.length === 0) {
+				return autoSearch();
+			}
+
+			dataLists.each(function (index, entrElm) {
+				var data = $(entrElm).val() || '';
+				// Todo 加筛选条件
+				var strs = data.split("&");
+				var prevCompName = strs[1];//历史委外公司
+
+				// 如果已经抢过的则不抢
+				if (prevCompName.indexOf('四川保全界-委外电催') != -1) return
+
+				var syskey = strs[0];
+				$.ajax({
+					type: "post",
+					url: '/collection/pages/CsCaseMainGrab/grabCaseConfirm.do',
+					data: {
+						syskey: syskey
+					},
+					success: function (data) {
+						var obj = eval('(' + data + ')');
+						alertMsg.info(obj.message);
+						if (obj.statusCode == 200) {
+							console.info('抢单成功！');
+						}
+						autoSearch()
+					},
+					error: function (XMLHttpRequest, textStatus, errorThrown) {
+						autoSearch()
+					}
+				})
+			})
+		}, 1000)
+	};
+
 
 </script>
