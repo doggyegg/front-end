@@ -1,4 +1,4 @@
-export default deepClone = (obj) => {
+export default (obj) => {
   // 定义一个映射，解决循环引用
   const map = new WeakMap();
   map.set(obj, true);
