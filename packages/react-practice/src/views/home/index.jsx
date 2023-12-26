@@ -1,4 +1,5 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect} from 'react';
+import Header from '../../components/Header';
 
 
  
@@ -20,6 +21,7 @@ import {useState,useEffect} from 'react'
 	},1000)
 	return (
 		<div>
+			<Header type={'react'}></Header>
 			{listData.map(item=>{
 					return (
 					<div key={item.name}>
