@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		@import url('http://192.168.4.68:8080/test.css');
+	</style>
+</head>
+
+<body>
+	CSS不会阻塞DomTree的解析，但是会阻塞页面的渲染
+</body>
+
+
+<script>
+	function* generateFunc() {
+		yield '0';
+		console.log('step1');
+		yield '1';
+		console.log('step2');
+		yield '2';
+		console.log('step3');
+		yield '3';
+	}
+	const emitter = generateFunc();
+	console.log(emitter.next().value);
+	console.log('doOtherThings');
+	console.log(emitter.next().value);
+	console.log(emitter.next().value);
+
+</script>
+
+
+</html>

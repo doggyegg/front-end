@@ -21,4 +21,15 @@
 	console.log(app.a.getName());
 	console.log(app.b.getName());
 	console.log(app.c.getName());
+	function outer() {
+		const outerData = 'outerData';
+
+		return function inner() {
+			return outerData;
+		}
+	}
+
+	const emitter = outer();
+
+	console.log(emitter());
 </script>
