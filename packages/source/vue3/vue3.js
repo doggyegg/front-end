@@ -1286,6 +1286,8 @@ var Vue = (function (exports) {
       shallowReadonlyMap
     );
   }
+
+  // 创建响应式对象
   function createReactiveObject(
     target,
     isReadonly2,
@@ -1373,6 +1375,7 @@ var Vue = (function (exports) {
     return !!(r && r.__v_isRef === true);
   }
   function ref(value) {
+    // Ref Begin
     return createRef(value, false);
   }
   function shallowRef(value) {
@@ -11295,6 +11298,8 @@ Component that was made reactive: `,
     ensureHydrationRenderer().hydrate(...args);
   };
   const createApp = (...args) => {
+    // createApp
+    debugger;
     const app = ensureRenderer().createApp(...args);
     {
       injectNativeTagCheck(app);

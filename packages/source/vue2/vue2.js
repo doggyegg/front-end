@@ -844,6 +844,7 @@
     };
     Dep.prototype.depend = function (info) {
       if (Dep.target) {
+        // Dep.target:当前的全局Watcher
         Dep.target.addDep(this);
         if (info && Dep.target.onTrack) {
           Dep.target.onTrack(__assign({ effect: Dep.target }, info));
@@ -879,6 +880,9 @@
   Dep.target = null;
   var targetStack = [];
   function pushTarget(target) {
+    if (target) {
+      debugger;
+    }
     targetStack.push(target);
     Dep.target = target;
   }
@@ -960,6 +964,7 @@
    * object. Once attached, the observer converts the target
    * object's property keys into getter/setters that
    * collect dependencies and dispatch updates.
+   * value:options.data | options.props.....
    */
   var Observer = /** @class */ (function () {
     function Observer(value, shallow, mock) {
@@ -972,7 +977,7 @@
       this.value = value;
       this.shallow = shallow;
       this.mock = mock;
-      // this.value = value
+      this.value = value;
       this.dep = mock ? mockDep : new Dep();
       this.vmCount = 0;
       def(value, "__ob__", this);
@@ -1013,6 +1018,7 @@
     }
     /**
      * Observe a list of Array items.
+     * 不是很理解为啥要将observeArray放在observer的原型链上
      */
     Observer.prototype.observeArray = function (value) {
       for (var i = 0, l = value.length; i < l; i++) {
@@ -1045,9 +1051,13 @@
   }
   /**
    * Define a reactive property on an Object.
+   * obj:options.data | options.props ,  key:Object.keys(options.data)
    */
   function defineReactive(obj, key, val, customSetter, shallow, mock) {
+    // 每个key闭包环境下的dep
     var dep = new Dep();
+    // property {value: 'xx', writable: true, enumerable: true, configurable: true}
+    // 属性设置了不可配置的不做响应式
     var property = Object.getOwnPropertyDescriptor(obj, key);
     if (property && property.configurable === false) {
       return;
@@ -1062,12 +1072,15 @@
       val = obj[key];
     }
     var childOb = !shallow && observe(val, false, mock);
+
     Object.defineProperty(obj, key, {
       enumerable: true,
       configurable: true,
       get: function reactiveGetter() {
         var value = getter ? getter.call(obj) : val;
+        // Dep.target为当前的全局watcher
         if (Dep.target) {
+          debugger;
           {
             dep.depend({
               target: obj,
@@ -1085,6 +1098,7 @@
         return isRef(value) && !shallow ? value.value : value;
       },
       set: function reactiveSetter(newVal) {
+        debugger;
         var value = getter ? getter.call(obj) : val;
         if (!hasChanged(value, newVal)) {
           return;
@@ -1540,7 +1554,7 @@
   function shallowReadonly(target) {
     return createReadonly(target, true);
   }
-
+  /** Vue3 Test Use **/
   function computed(getterOrOptions, debugOptions) {
     var getter;
     var setter;
@@ -4512,6 +4526,7 @@
       if (isFunction(expOrFn)) {
         this.getter = expOrFn;
       } else {
+        // 巧妙的函数柯里化！
         this.getter = parsePath(expOrFn);
         if (!this.getter) {
           this.getter = noop;
@@ -4529,6 +4544,7 @@
      * Evaluate the getter, and re-collect dependencies.
      */
     Watcher.prototype.get = function () {
+      debugger;
       pushTarget(this);
       var value;
       var vm = this.vm;
@@ -4557,6 +4573,7 @@
     };
     /**
      * Add a dependency to this directive.
+     * 是将自己放到传进来的dep上
      */
     Watcher.prototype.addDep = function (dep) {
       var id = dep.id;
@@ -4570,6 +4587,7 @@
     };
     /**
      * Clean up for dependency collection.
+     * 通知所有收集了该依赖的dep清除这个watcher
      */
     Watcher.prototype.cleanupDeps = function () {
       var i = this.deps.length;
@@ -4591,6 +4609,7 @@
     /**
      * Subscriber interface.
      * Will be called when a dependency changes.
+     * 通常情况是将该watcher放入queue，同步情况是直接执行watcher的run函数
      */
     Watcher.prototype.update = function () {
       /* istanbul ignore else */
@@ -4608,6 +4627,7 @@
      */
     Watcher.prototype.run = function () {
       if (this.active) {
+        // 执行了new Watcher时放入的getter ,比如render函数就是在这执行的
         var value = this.get();
         if (
           value !== this.value ||
@@ -4620,6 +4640,8 @@
           // set new value
           var oldValue = this.value;
           this.value = value;
+
+          // 执行new Watcher时放入的callback,比如$watch,以及 options.watch就是在这执行的
           if (this.user) {
             var info = 'callback for watcher "'.concat(this.expression, '"');
             invokeWithErrorHandling(
@@ -4816,6 +4838,7 @@
     }
   }
   var computedWatcherOptions = { lazy: true };
+  // vm:实例，computed:options.computed
   function initComputed$1(vm, computed) {
     // $flow-disable-line
     var watchers = (vm._computedWatchers = Object.create(null));
@@ -4873,6 +4896,7 @@
       }
     }
   }
+  // target:vm实例  key:computed中对应的key,userDef:computed中对应的值
   function defineComputed(target, key, userDef) {
     var shouldCache = !isServerRendering();
     if (isFunction(userDef)) {
@@ -4899,6 +4923,7 @@
         );
       };
     }
+    // 单独对computed的key做代理，在这做依赖收集
     Object.defineProperty(target, key, sharedPropertyDefinition);
   }
   function createComputedGetter(key) {
@@ -5107,15 +5132,6 @@
       var vm = this;
       // a uid
       vm._uid = uid++;
-      var startTag, endTag;
-      /* istanbul ignore if */
-      if (config.performance && mark) {
-        startTag = "vue-perf-start:".concat(vm._uid);
-        endTag = "vue-perf-end:".concat(vm._uid);
-        mark(startTag);
-      }
-      // a flag to mark this as a Vue instance without having to do instanceof
-      // check
       vm._isVue = true;
       // avoid instances from being observed
       vm.__v_skip = true;
@@ -6024,6 +6040,7 @@
   /**
    * Merge two option objects into a new one.
    * Core utility used in both instantiation and inheritance.
+   * child is send by user , parent is send by constructor
    */
   function mergeOptions(parent, child, vm) {
     {
@@ -10854,8 +10871,7 @@
             ) {
               cumulated[attr.name] = attr;
               return cumulated;
-            },
-            {});
+            }, {});
           }
           attrs.forEach(function (attr) {
             if (invalidAttributeRE.test(attr.name)) {
@@ -13025,21 +13041,20 @@
   // `createCompilerCreator` allows creating compilers that use alternative
   // parser/optimizer/codegen, e.g the SSR optimizing compiler.
   // Here we just export a default compiler using the default parts.
-  var createCompiler = createCompilerCreator(function baseCompile(
-    template,
-    options
-  ) {
-    var ast = parse(template.trim(), options);
-    if (options.optimize !== false) {
-      optimize(ast, options);
+  var createCompiler = createCompilerCreator(
+    function baseCompile(template, options) {
+      var ast = parse(template.trim(), options);
+      if (options.optimize !== false) {
+        optimize(ast, options);
+      }
+      var code = generate(ast, options);
+      return {
+        ast: ast,
+        render: code.render,
+        staticRenderFns: code.staticRenderFns,
+      };
     }
-    var code = generate(ast, options);
-    return {
-      ast: ast,
-      render: code.render,
-      staticRenderFns: code.staticRenderFns,
-    };
-  });
+  );
 
   var _a = createCompiler(baseOptions),
     compileToFunctions = _a.compileToFunctions;
