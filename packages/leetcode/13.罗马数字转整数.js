@@ -44,5 +44,3 @@ var romanToInt = function (s) {
   return result;
 };
 // @lc code=end
-
-console.log(romanToInt("MCMXCIV"));

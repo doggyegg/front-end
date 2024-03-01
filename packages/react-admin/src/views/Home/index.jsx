@@ -1,33 +1,20 @@
-import {useState,useEffect} from 'react';
+import { useState, useEffect } from "react";
+import { observer } from "mobx-react-lite";
 
- const Home = ()=>{
-	const [name,setName] = useState('zs');
-	const [isShow,setIsShow] = useState(true);
-	const [listData,setListData] = useState([{
-		name:'zs',
-		age:18,
-		gender:'man'
-	},{
-		name:'ls',
-		age:20,
-		gender:'woman'
-	}])
+const Home = observer(({ myName }) => {
+  return (
+    <div
+      onClick={() => {
+        myName.setName("ls");
+      }}
+    >
+      {myName.name}
+    </div>
+  );
+});
 
-	useEffect(()=>{
-			
-	},[]) 
-	return (
-		<div>
-			{listData.map(item=>{
-					return (
-					<div key={item.name}>
-						<div>{item.name}</div>
-						<div>{item.age}</div>
-						<div>{item.gender}</div>	
-					</div>)
-			})}
-		</div>
-	)
-}
+// const Home = () => {
+//   return <div>22</div>;
+// };
 
-export default Home
+export default Home;

@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
+import myName from "../store/index";
 
 export default () => {
   const [routes, setRoutes] = useState([]);
@@ -50,7 +51,7 @@ export default () => {
             <Route
               path={menu.path}
               key={menu.path}
-              element={<menu.element></menu.element>}
+              element={<menu.element myName={myName}></menu.element>}
             ></Route>
           );
         })}
