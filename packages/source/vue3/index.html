@@ -8,7 +8,7 @@
 </head>
 
 <body style="background: url('../../practice/fakeBg.png');">
-	<div id="app">{{message}}</div>
+	<div id="app"><button @click="changeMsg">{{msg}}</button></div>
 </body>
 <script src="./vue3.js"></script>
 
@@ -17,9 +17,15 @@
 
 	createApp({
 		setup() {
-			const message = ref('Hello vue!')
+			const msg = ref('Hello vue!');
+			const changeMsg = () => {
+				debugger
+				msg.value = 'changed'
+			}
+
 			return {
-				message
+				msg,
+				changeMsg
 			}
 		}
 	}).mount('#app')

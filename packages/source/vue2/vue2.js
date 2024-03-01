@@ -880,9 +880,6 @@
   Dep.target = null;
   var targetStack = [];
   function pushTarget(target) {
-    if (target) {
-      debugger;
-    }
     targetStack.push(target);
     Dep.target = target;
   }
@@ -977,7 +974,6 @@
       this.value = value;
       this.shallow = shallow;
       this.mock = mock;
-      this.value = value;
       this.dep = mock ? mockDep : new Dep();
       this.vmCount = 0;
       def(value, "__ob__", this);

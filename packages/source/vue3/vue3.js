@@ -326,7 +326,6 @@ var Vue = (function (exports) {
   function looseIndexOf(arr, val) {
     return arr.findIndex((item) => looseEqual(item, val));
   }
-
   const toDisplayString = (val) => {
     return isString(val)
       ? val
@@ -507,6 +506,7 @@ var Vue = (function (exports) {
   const ITERATE_KEY = Symbol("iterate");
   const MAP_KEY_ITERATE_KEY = Symbol("Map key iterate");
   class ReactiveEffect {
+    // 生成effect
     constructor(fn, scheduler = null, scope) {
       this.fn = fn;
       this.scheduler = scheduler;
@@ -530,6 +530,7 @@ var Vue = (function (exports) {
       try {
         this.parent = activeEffect;
         activeEffect = this;
+				debugger
         shouldTrack = true;
         trackOpBit = 1 << ++effectTrackDepth;
         if (effectTrackDepth <= maxMarkerBits) {
@@ -544,6 +545,7 @@ var Vue = (function (exports) {
         }
         trackOpBit = 1 << --effectTrackDepth;
         activeEffect = this.parent;
+        debugger;
         shouldTrack = lastShouldTrack;
         this.parent = void 0;
         if (this.deferStop) {
@@ -626,7 +628,9 @@ var Vue = (function (exports) {
       shouldTrack2 = !dep.has(activeEffect);
     }
     if (shouldTrack2) {
+      // 收集当前effect依赖
       dep.add(activeEffect);
+      debugger;
       activeEffect.deps.push(dep);
       if (activeEffect.onTrack) {
         activeEffect.onTrack(
@@ -801,7 +805,6 @@ var Vue = (function (exports) {
       ) {
         return target;
       }
-
       const targetIsArray = isArray(target);
       if (!isReadonly2) {
         if (targetIsArray && hasOwn(arrayInstrumentations, key)) {
@@ -11299,7 +11302,6 @@ Component that was made reactive: `,
   };
   const createApp = (...args) => {
     // createApp
-    debugger;
     const app = ensureRenderer().createApp(...args);
     {
       injectNativeTagCheck(app);

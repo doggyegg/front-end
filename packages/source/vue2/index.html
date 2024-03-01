@@ -10,6 +10,7 @@
 <body>
 	<div id="app">
 		{{name}}
+		{{nameplus}}
 	</div>
 </body>
 <script src="./vue2.js"></script>
@@ -20,6 +21,11 @@
 		data() {
 			return {
 				name: 'zs',
+				age: 18,
+				test: [],
+				info: {
+					name: 'zs'
+				}
 			}
 		},
 		components: {
@@ -40,11 +46,28 @@
 		methods: {
 
 		},
+		computed: {
+			nameplus() {
+				return this.name + 1
+			},
+			nameplus: {
+				get() {
+					return
+				}
+			}
+		},
+		// watch: {
+		// 	name() {
+		// 		debugger
+		// 	}
+		// },
 		mounted() {
 			this.$watch('name', () => {
 				debugger
 			})
 			this.name = "ls";
+
+
 		},
 	})
 </script>

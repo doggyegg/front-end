@@ -1,8 +1,5 @@
 import {useState,useEffect} from 'react';
-import Header from '../../components/Header';
 
-
- 
  const Home = ()=>{
 	const [name,setName] = useState('zs');
 	const [isShow,setIsShow] = useState(true);
@@ -16,18 +13,17 @@ import Header from '../../components/Header';
 		gender:'woman'
 	}])
 
-	setTimeout(()=>{
-		setName('ls');
-	},1000)
+	useEffect(()=>{
+			
+	},[]) 
 	return (
 		<div>
-			<Header type={'react'}></Header>
 			{listData.map(item=>{
 					return (
 					<div key={item.name}>
 						<div>{item.name}</div>
 						<div>{item.age}</div>
-						<div>{item.gender}</div>
+						<div>{item.gender}</div>	
 					</div>)
 			})}
 		</div>
