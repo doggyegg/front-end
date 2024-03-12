@@ -14,7 +14,8 @@
     "react-scripts": "5.0.1",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@front-end/utils": "workspace:*"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,7 +36,6 @@
     ]
   },
   "devDependencies": {
-    "@front-end/utils": "workspace:*",
     "less": "^4.2.0",
     "less-loader": "^11.1.3"
   }
